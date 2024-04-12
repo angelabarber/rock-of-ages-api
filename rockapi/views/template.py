@@ -8,7 +8,6 @@ from rockapi.models import Void
 class TemplateView(ViewSet):
     """Void view set"""
 
-
     def create(self, request):
         """Handle POST operations
 
@@ -70,10 +69,12 @@ class TemplateView(ViewSet):
             return Response(None, status=status.HTTP_204_NO_CONTENT)
 
         except Void.DoesNotExist as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
         except Exception as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {"message": ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def list(self, request):
         """Handle GET requests for all items
@@ -94,4 +95,8 @@ class VoidSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Void
-        fields = ( 'id', 'sample_name', 'sample_description', )
+        fields = (
+            "id",
+            "sample_name",
+            "sample_description",
+        )
